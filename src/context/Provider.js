@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function Provider({ children }) {
-  const [stateA, setStateA] = useState('initialStateA');
-  const [stateB, setStateB] = useState('initialStateB');
+  const [tableData, setTableData] = useState([]);
   const contextValue = {
-    stateA,
-    setStateA,
-    stateB,
-    setStateB,
+    tableData,
+    setTableData,
   };
 
   return (
