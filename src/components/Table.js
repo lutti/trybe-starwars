@@ -4,11 +4,13 @@ import FetchStarWars from '../apis/api';
 import ExcludeResidents from '../utils/utility';
 
 function Table() {
-  const { tableData, setTableData } = useContext(MyContext);
+  const { tableData } = useContext(MyContext);
 
   useEffect(() => {
     async function FetchTableData() {
+      const { setTableData } = useContext(MyContext);
       const data = await FetchStarWars();
+
       setTableData(ExcludeResidents(data));
     }
     FetchTableData();
