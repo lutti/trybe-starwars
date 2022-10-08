@@ -1,24 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
-import FetchStarWars from '../apis/api';
-import ExcludeResidents from '../utils/utility';
 
 function Table() {
-  const { tableData } = useContext(MyContext);
-
-  useEffect(() => {
-    async function FetchTableData() {
-      const { setTableData } = useContext(MyContext);
-      const data = await FetchStarWars();
-
-      setTableData(ExcludeResidents(data));
-    }
-    FetchTableData();
-  }, []);
+  const { tableData, filteredTable, buscado } = useContext(MyContext);
+  const planetsList = buscado ? filteredTable : tableData;
 
   return (
     <div>
-      Table
       <table>
         <thead>
           <tr>
@@ -38,7 +26,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((planet) => (
+          {planetsList.map((planet) => (
             <tr key={ `key-${planet.name}` }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
