@@ -7,6 +7,7 @@ function Provider({ children }) {
   const [tableData, setTableData] = useState([]);
   const [filteredTable, setFilteredTable] = useState([]);
   const [buscado, setBuscado] = useState(false);
+  const [filterByNumeric, setFilterNumeric] = useState([]);
 
   useEffect(() => {
     async function FetchTableData() {
@@ -24,6 +25,8 @@ function Provider({ children }) {
     setFilteredTable,
     buscado,
     setBuscado,
+    filterByNumeric,
+    setFilterNumeric,
   };
 
   return (
