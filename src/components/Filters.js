@@ -1,12 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 
+const COLUNA_IS = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function Filters() {
   const [filter, setFilter] = useState({
     coluna: 'population',
     operador: 'maior que',
     number: 0,
   });
+  const [columOptions, setColumOptions] = useState(COLUNA_IS);
 
   const {
     tableData,
@@ -21,6 +30,7 @@ function Filters() {
   const data = buscado ? filteredTable : tableData;
 
   const applyFilter = (dataset, filtro) => {
+    setColumOptions(columOptions.filter((f) => f !== filtro.coluna));
     if (filtro.operador === 'menor que') {
       return dataset
         .filter((planet) => Number(planet[filtro.coluna]) < Number(filtro.number));
@@ -42,6 +52,15 @@ function Filters() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByNumeric]);
 
+  useEffect(() => {
+    if (columOptions.length > 0) {
+      setFilter({ ...filter, coluna: columOptions[0] });
+    } else {
+      setFilter({ ...filter, coluna: '' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [columOptions]);
+
   const clickFilter = () => {
     setFilterNumeric([...filterByNumeric, { ...filter }]);
     // const tabData = filterByNumeric.reduce((acc, curr) => applyFilter(acc, curr), data);
@@ -57,11 +76,11 @@ function Filters() {
         onChange={ ({ target }) => setFilter({ ...filter, coluna: target.value }) }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          columOptions.map((coluna) => (
+            <option key={ coluna } value={ coluna }>{ coluna }</option>
+          ))
+        }
       </select>
       <select
         name="operador"
