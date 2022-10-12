@@ -25,9 +25,9 @@ function Table() {
             <th>url</th>
           </tr>
         </thead>
-        <tbody>
-          {planetsList.map((planet) => (
-            <tr key={ `key-${planet.name}` }>
+        <tbody data-testid="tbody-element">
+          {planetsList.map((planet, index) => (
+            <tr key={ `${index}` }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
